@@ -64,7 +64,7 @@ export const sendMessage = async (message, conversationHistory = []) => {
     
     // Use SDK with working model
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-3-flash-preview"  
+      model: "gemini-2.5-flash"  
     });
     
     // Build conversation context with system prompt
