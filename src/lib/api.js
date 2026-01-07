@@ -1,17 +1,10 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { profileData } from "./constants";
 
-// Check if API key exists
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
-if (!apiKey) {
-  console.error("❌ GEMINI_API_KEY is not set in .env file!");
-}
-
-// Initialize Gemini API
 const genAI = new GoogleGenerativeAI(apiKey);
 
-// Create system prompt with profile context
 const createSystemPrompt = () => {
   return `You are an AI assistant for Sathvik Modhi's professional portfolio website. Your role is to help recruiters and visitors learn about Sathvik's professional experience, skills, and projects.
 
@@ -61,14 +54,11 @@ export const sendMessage = async (message, conversationHistory = []) => {
 
     console.log("🚀 Sending message to Gemini API...");
     
-    // Use the latest Gemini model - try these in order of preference:
-    // 1. gemini-1.5-flash (recommended, stable)
-    // 2. gemini-2.0-flash-exp (experimental, latest)
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-3-flash-preview"  // or "gemini-2.0-flash-exp" for newer version
+      model: "gemini-3-flash-preview" 
     });
     
-    // Build conversation context with system prompt
+
     const fullContext = [
       { role: "user", parts: [{ text: createSystemPrompt() }] },
       { role: "model", parts: [{ text: "I understand. I'm here to help recruiters and visitors learn about Sathvik Modhi's professional background, skills, and experience. I'll provide accurate, concise, and relevant information based on his profile." }] },
@@ -94,9 +84,8 @@ export const sendMessage = async (message, conversationHistory = []) => {
     return text;
     
   } catch (error) {
-    console.error('❌ Error calling Gemini API:', error);
+    console.error(' Error calling Gemini API:', error);
     
-    // Provide helpful error messages
     if (error.message?.includes('API key not valid')) {
       throw new Error('Invalid API key. Please check your .env file.');
     } else if (error.message?.includes('quota')) {
@@ -111,7 +100,7 @@ export const sendMessage = async (message, conversationHistory = []) => {
   }
 };
 
-// Helper function to get quick response for suggestions
+
 export const getQuickResponse = async (suggestion) => {
   const quickResponses = {
     "Tell me about your experience": `Sathvik Modhi is a Software Engineer at LTIMindtree (Sep 2022 - Present) with strong expertise in AI/ML and full-stack development. He has led the development of JOVI, an AI-powered chatbot using custom LLMs and RAG pipelines, and has worked extensively with technologies like Spring Boot, Vue.js, Python, LangChain, Docker, and Kubernetes. His key achievements include building production-grade AI chatbots, implementing data pipelines with Apache Spark and Kafka, and managing LLM deployments that reduced manual effort by 70%.`,
