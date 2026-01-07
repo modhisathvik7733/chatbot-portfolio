@@ -1,8 +1,15 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { profileData } from "./constants";
 
+// Check if API key exists
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
+if (!apiKey) {
+  console.error("❌ GEMINI_API_KEY is not set in .env file!");
+}
+
 // Initialize Gemini API
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(apiKey);
 
 // Create system prompt with profile context
 const createSystemPrompt = () => {
@@ -48,33 +55,59 @@ GUIDELINES:
 
 export const sendMessage = async (message, conversationHistory = []) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    if (!apiKey) {
+      throw new Error("API key is not configured. Please check your .env file.");
+    }
+
+    console.log("🚀 Sending message to Gemini API...");
     
-    // Build conversation context
+    // Use the latest Gemini model - try these in order of preference:
+    // 1. gemini-1.5-flash (recommended, stable)
+    // 2. gemini-2.0-flash-exp (experimental, latest)
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-3-flash-preview"  // or "gemini-2.0-flash-exp" for newer version
+    });
+    
+    // Build conversation context with system prompt
     const fullContext = [
       { role: "user", parts: [{ text: createSystemPrompt() }] },
       { role: "model", parts: [{ text: "I understand. I'm here to help recruiters and visitors learn about Sathvik Modhi's professional background, skills, and experience. I'll provide accurate, concise, and relevant information based on his profile." }] },
       ...conversationHistory.map(msg => ({
         role: msg.role === 'user' ? 'user' : 'model',
         parts: [{ text: msg.content }]
-      })),
-      { role: "user", parts: [{ text: message }] }
+      }))
     ];
 
     const chat = model.startChat({
-      history: fullContext.slice(0, -1),
+      history: fullContext,
       generationConfig: {
-        maxOutputTokens: 500,
+        maxOutputTokens: 1000,
         temperature: 0.7,
       },
     });
 
     const result = await chat.sendMessage(message);
     const response = await result.response;
-    return response.text();
+    const text = response.text();
+    
+    console.log("✅ Received response from Gemini API");
+    return text;
+    
   } catch (error) {
-    console.error('Error calling Gemini API:', error);
-    throw new Error('Failed to get response. Please try again.');
+    console.error('❌ Error calling Gemini API:', error);
+    
+    // Provide helpful error messages
+    if (error.message?.includes('API key not valid')) {
+      throw new Error('Invalid API key. Please check your .env file.');
+    } else if (error.message?.includes('quota')) {
+      throw new Error('API quota exceeded. Please wait a moment and try again.');
+    } else if (error.message?.includes('404') || error.message?.includes('not found')) {
+      throw new Error('Model not found. The API may have been updated. Please check the model name.');
+    } else if (error.message?.includes('403')) {
+      throw new Error('Access denied. Please enable the Gemini API in Google AI Studio.');
+    } else {
+      throw new Error('Failed to get response. Please try again.');
+    }
   }
 };
 

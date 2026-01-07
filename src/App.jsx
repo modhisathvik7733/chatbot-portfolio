@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidebar from './components/ui/Sidebar';
-import ChatInterface from './components/ui/ChatInterface';
+import Sidebar from './components/Sidebar';
+import ChatInterface from './components/ChatInterface';
 
 function App() {
   return (

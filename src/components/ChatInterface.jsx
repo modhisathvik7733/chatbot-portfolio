@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Loader2 } from 'lucide-react';
-import { sendMessage, getQuickResponse } from '../../lib/api';
-import { chatSuggestions } from '../../lib/constants';
+import { sendMessage, getQuickResponse } from '../lib/api';
+import { chatSuggestions } from '../lib/constants';
 
 function ChatInterface() {
   const [messages, setMessages] = useState([
