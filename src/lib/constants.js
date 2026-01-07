@@ -8,6 +8,12 @@ export const profileData = {
   linkedin: "https://linkedin.com/in/sathvik-modhi",
   github: "https://github.com/modhisathvik7733",
   
+  bio: "I'm Sathvik Modhi, a Software Engineer at LTIMindtree based in Bengaluru, India. I have a strong passion for continuous learning and innovation, particularly in the field of AI. My goal is to create impactful solutions that enhance business operations and user experiences.",
+  
+  longBio: "I am a Machine Learning Engineer with over 3 years of experience in developing AI-powered applications and generative AI solutions. I have a strong background in building end-to-end ML pipelines and deploying production-ready systems. I have a diverse skill set that includes programming languages like Python, Java, and JavaScript, as well as expertise in machine learning frameworks such as TensorFlow and PyTorch. One of my proudest achievements is developing a production-grade AI-powered financial assistant application that has seen high user engagement and accuracy in automating tasks.",
+  
+  tags: ["Machine Learning", "Generative AI", "Deep Learning", "NLP", "Computer Vision", "MLOps"],
+  
   experience: {
     company: "LTIMindtree",
     role: "Software Engineer",
@@ -27,18 +33,65 @@ export const profileData = {
   
   projects: [
     {
-      name: "Spendly AI - Financial Management App",
+      id: 1,
+      name: "Spendly AI - Intelligent Financial Assistant",
+      category: "AI/ML",
       date: "Apr 2025",
-      playStore: "https://play.google.com/store",
       description: "Built a cross-platform Flutter + Spring Boot + MySQL app for expense tracking, budgeting, and AI-driven insights",
       highlights: [
         "Deployed backend on Render Cloud with Firebase authentication",
         "Integrated Gemini API chatbot for intelligent financial recommendations",
         "Enhanced app performance through data caching and optimized API calls, improving responsiveness and load times by 40%"
       ],
-      tech: ["Flutter", "Spring Boot", "MySQL", "Firebase", "Gemini API"]
+      tech: ["Flutter", "Spring Boot", "MySQL", "Firebase", "Gemini API"],
+      gradient: "from-pink-500 via-purple-500 to-blue-500"
+    },
+    {
+      id: 2,
+      name: "Enterprise Document Intelligence Platform",
+      category: "AI/ML",
+      date: "2024",
+      description: "RAG-powered document processing and intelligent search system",
+      highlights: [
+        "Implemented semantic search with vector embeddings",
+        "Built custom LLM pipeline for document understanding",
+        "Achieved 95% accuracy in document classification"
+      ],
+      tech: ["Python", "LangChain", "PostgreSQL", "Docker", "FastAPI"],
+      gradient: "from-blue-500 via-cyan-500 to-teal-500"
+    },
+    {
+      id: 3,
+      name: "Intelligent Code Generation Assistant",
+      category: "AI/ML",
+      date: "2024",
+      description: "AI-powered code completion and generation tool",
+      highlights: [
+        "Fine-tuned CodeLLaMA for enterprise codebases",
+        "Integrated with VS Code and IntelliJ",
+        "Reduced development time by 30%"
+      ],
+      tech: ["Python", "PyTorch", "Transformers", "TypeScript", "Node.js"],
+      gradient: "from-purple-500 via-pink-500 to-rose-500"
     }
   ],
+  
+  skills: {
+    frontend: ["React", "Vue.js", "TypeScript", "Tailwind CSS", "HTML/CSS"],
+    backend: ["Python", "Java", "JavaScript", "SQL"],
+    ml: ["TensorFlow", "PyTorch", "Keras", "Scikit-learn", "XGBoost", "LightGBM"],
+    cloud: ["AWS", "Google Cloud AI", "Azure ML Studio"],
+    tools: ["Docker", "Kubernetes", "Git", "CI/CD", "Nginx"],
+    languages: ["Python", "Java", "JavaScript", "HTML", "CSS", "Bash"],
+    technologies: [
+      "Spring Boot", "Flask", "Django", "Vue.js", "LangChain", 
+      "Apache Spark", "Kafka", "Docker", "Kubernetes", "vLLM", 
+      "Git & CI/CD", "WebSockets", "SSE", "Nginx", "SSL/TLS", 
+      "DNS Management", "Selenium"
+    ],
+    databases: ["PostgreSQL", "MySQL", "ArangoDB", "OpenSearch"],
+    aiml: ["LangChain", "RAG", "LLMs", "Sentence Transformers", "Custom Chatbots", "NLP"]
+  },
   
   certifications: [
     {
@@ -51,19 +104,7 @@ export const profileData = {
       issuer: "LTIMindtree",
       date: "May 2023"
     }
-  ],
-  
-  skills: {
-    languages: ["Python", "Java", "JavaScript", "HTML", "CSS", "Bash"],
-    technologies: [
-      "Spring Boot", "Flask", "Django", "Vue.js", "LangChain", 
-      "Apache Spark", "Kafka", "Docker", "Kubernetes", "vLLM", 
-      "Git & CI/CD", "WebSockets", "SSE", "Nginx", "SSL/TLS", 
-      "DNS Management", "Selenium"
-    ],
-    databases: ["PostgreSQL", "MySQL", "ArangoDB", "OpenSearch"],
-    aiml: ["LangChain", "RAG", "LLMs", "Sentence Transformers", "Custom Chatbots", "NLP"]
-  }
+  ]
 };
 
 export const chatSuggestions = [

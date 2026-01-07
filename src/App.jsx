@@ -1,11 +1,9 @@
 import React from 'react';
-import Sidebar from './components/Sidebar';
-import ChatInterface from './components/ChatInterface';
+import ChatInterface from './components/ui/ChatInterface';
 
 function App() {
   return (
-    <div className="flex h-screen overflow-hidden">
-      <Sidebar />
+    <div className="h-screen overflow-hidden">
       <ChatInterface />
     </div>
   );
