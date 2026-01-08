@@ -191,8 +191,8 @@ function ChatInterface() {
         {/* Active Chat View */}
         {isActive && (
           <>
-            {/* Header */}
-            <div className="px-3 py-2 sm:px-6 sm:py-3 flex items-center justify-center border-b border-white/20 bg-white/20 backdrop-blur-sm">
+            {/* Header - STICKY */}
+            <div className="sticky top-0 z-20 px-3 py-2 sm:px-6 sm:py-3 flex items-center justify-center border-b border-white/20 bg-white/30 backdrop-blur-md shadow-sm">
               <div className="flex items-center gap-2 sm:gap-3">
                 <svg width="35" height="35" viewBox="0 0 100 100" className="sm:w-[45px] sm:h-[45px] drop-shadow-lg">
                   <circle cx="50" cy="50" r="48" fill="#fff" opacity="0.9"/>
@@ -211,7 +211,7 @@ function ChatInterface() {
 
             {/* Messages Area */}
             <div className="flex-1 overflow-y-auto px-2 py-3 sm:px-4 sm:py-6 messages-container">
-              <div className="max-w-5xl mx-auto space-y-3 sm:space-y-6">
+              <div className="max-w-5xl mx-auto space-y-3 sm:space-y-6 pb-4">
                 {messages.map((message, index) => (
                   <div
                     key={index}
@@ -233,8 +233,8 @@ function ChatInterface() {
               </div>
             </div>
 
-            {/* Bottom Input Area */}
-            <div className="px-2 py-2 sm:px-4 sm:py-3 bg-white/30 backdrop-blur-xl border-t border-white/30">
+            {/* Bottom Input Area - STICKY */}
+            <div className="sticky bottom-0 z-20 px-2 py-2 sm:px-4 sm:py-3 bg-white/40 backdrop-blur-xl border-t border-white/30 shadow-lg">
               <div className="max-w-4xl mx-auto">
                 {/* Quick Actions - Show on focus */}
                 {showQuickActions && (
@@ -269,7 +269,7 @@ function ChatInterface() {
                     onFocus={() => setShowQuickActions(true)}
                     onBlur={() => setTimeout(() => setShowQuickActions(false), 200)}
                     placeholder="Ask me anything..."
-                    className="w-full px-3 py-2 sm:px-5 sm:py-2.5 rounded-full bg-white/70 backdrop-blur-xl border-2 border-white/40 focus:border-white/60 focus:outline-none shadow-lg text-xs sm:text-sm placeholder:text-slate-400 pr-10 sm:pr-12"
+                    className="w-full px-3 py-2 sm:px-5 sm:py-2.5 rounded-full bg-white/80 backdrop-blur-xl border-2 border-white/50 focus:border-white/70 focus:outline-none shadow-lg text-xs sm:text-sm placeholder:text-slate-400 pr-10 sm:pr-12"
                     disabled={isLoading}
                   />
                   <button
