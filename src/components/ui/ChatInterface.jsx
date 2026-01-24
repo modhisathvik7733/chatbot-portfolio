@@ -272,7 +272,7 @@ function ChatInterface() {
                   <span className="relative flex items-center gap-3">
                     <span className="text-2xl">✨</span>
                     Why Hire Me?
-                    <span className="text-2xl">🚀</span>
+                    <span className="text-2xl"></span>
                   </span>
                 </button>
               </div>
@@ -640,6 +640,7 @@ function WhyHireMeCard({ data }) {
           </div>
         ))}
       </div>
+
 
       {/* CTA */}
       <div className="bg-slate-900 rounded-3xl p-8 text-center">
