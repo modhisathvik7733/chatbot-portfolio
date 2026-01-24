@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import resumePDF from '../../assets/Sathvik_Modhi_Resume.pdf';
 
 function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -99,8 +100,8 @@ function Sidebar() {
           {/* Social links and Resume */}
           <div className="flex flex-col gap-3 pt-6 border-t border-slate-200 relative z-10">
             <a
-              href="/resume.pdf"
-              download
+              href={resumePDF}
+              download="Sathvik_Modhi_Resume.pdf"
               className="group flex items-center justify-between px-5 py-3.5 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02]"
             >
               <div className="flex items-center gap-3">

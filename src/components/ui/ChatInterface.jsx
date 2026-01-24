@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Send, Loader2, Download, Mail, Phone, Linkedin, Github, FileText, ChevronRight, ExternalLink, Code2, Briefcase, User, Cpu } from 'lucide-react';
 import { sendMessage } from '../../lib/api';
 import { profileData } from '../../lib/constants';
+import resumePDF from '../../assets/Sathvik_Modhi_Resume.pdf';
 
 function ChatInterface() {
   const [messages, setMessages] = useState([]);
@@ -27,17 +28,19 @@ function ChatInterface() {
     if (lower.includes('contact') || lower.includes('reach') || lower.includes('email')) return 'contact';
     if (lower.includes('resume') || lower.includes('cv')) return 'resume';
     if (lower.includes('experience') || lower.includes('work') || lower.includes('job') || lower.includes('career')) return 'experience';
+    if (lower.includes('hire') || lower.includes('why')) return 'whyhire';
     return 'text';
   };
 
   const handleQuickAction = async (action) => {
     const queries = {
-      about: "Who are you?",
-      experience: "What is your professional experience?",
-      projects: "Show me your projects",
-      skills: "What are your technical skills?",
-      contact: "How can I contact you?",
-      resume: "Can I see your resume?"
+      about: "Tell me about your professional background and expertise.",
+      experience: "What are your key career highlights and experience?",
+      projects: "Showcase your top technical projects and innovations.",
+      skills: "What is your complete technical stack?",
+      contact: "How can I get in touch for opportunities?",
+      resume: "Please provide your resume for download.",
+      whyhire: "Why should I hire you?"
     };
 
     setShowQuickActions(false);
@@ -50,8 +53,24 @@ function ChatInterface() {
         userMessage,
         {
           role: 'assistant',
-          content: "Here represents my professional journey and qualifications:",
+          content: "Here's my comprehensive resume:",
           type: 'resume',
+          data: profileData
+        }
+      ]);
+      return;
+    }
+
+    if (action === 'whyhire') {
+      if (!isActive) setIsActive(true);
+      const userMessage = { role: 'user', content: queries[action], type: 'text' };
+      setMessages(prev => [
+        ...prev,
+        userMessage,
+        {
+          role: 'assistant',
+          content: "Great question! Here's why I'd be a valuable addition to your team:",
+          type: 'whyhire',
           data: profileData
         }
       ]);
@@ -133,6 +152,7 @@ function ChatInterface() {
               case 'skills': return <SkillsCard data={profileData} />;
               case 'contact': return <ContactCard data={profileData} />;
               case 'resume': return <ResumeCard />;
+              case 'whyhire': return <WhyHireMeCard data={profileData} />;
               default: return null;
             }
           })()}
@@ -223,12 +243,13 @@ function ChatInterface() {
                 </div>
               </div>
 
-              <div className="mt-12 flex flex-wrap justify-center gap-4">
+              <div className="mt-12 flex flex-wrap justify-center gap-3">
                 {[
                   { id: 'projects', label: 'View Projects', icon: Code2 },
                   { id: 'experience', label: 'My Experience', icon: Briefcase },
                   { id: 'about', label: 'About Me', icon: User },
-                  { id: 'skills', label: 'Technical Skills', icon: Cpu }
+                  { id: 'skills', label: 'Technical Skills', icon: Cpu },
+                  { id: 'resume', label: 'Resume', icon: FileText }
                 ].map((action) => (
                   <button
                     key={action.id}
@@ -239,6 +260,21 @@ function ChatInterface() {
                     {action.label}
                   </button>
                 ))}
+              </div>
+
+              {/* Why Hire Me - Special CTA */}
+              <div className="mt-8">
+                <button
+                  onClick={() => handleQuickAction('whyhire')}
+                  className="group relative px-8 py-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 hover:scale-105 overflow-hidden"
+                >
+                  <span className="absolute inset-0 bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+                  <span className="relative flex items-center gap-3">
+                    <span className="text-2xl">✨</span>
+                    Why Hire Me?
+                    <span className="text-2xl">🚀</span>
+                  </span>
+                </button>
               </div>
             </div>
           )}
@@ -537,12 +573,93 @@ function ResumeCard() {
           <h3 className="text-2xl font-bold text-slate-900 mb-2">Full Resume</h3>
           <p className="text-slate-600 mb-6">Download my comprehensive resume to view detailed work history, educational background, and complete skill set.</p>
           <a
-            href="/resume.pdf"
-            download
+            href={resumePDF}
+            download="Sathvik_Modhi_Resume.pdf"
             className="inline-flex items-center gap-2 px-8 py-3 bg-slate-900 text-white rounded-xl hover:bg-indigo-600 transition-colors font-medium shadow-lg hover:shadow-indigo-500/25"
           >
             <Download className="w-5 h-5" />
             Download PDF
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WhyHireMeCard({ data }) {
+  const highlights = [
+    { stat: "78%", label: "Reduced Manual Triage", desc: "Automated ticket classification" },
+    { stat: "95%", label: "Model Accuracy", desc: "ML classification systems" },
+    { stat: "3+", label: "Years Experience", desc: "Building production AI systems" }
+  ];
+
+  const strengths = [
+    { emoji: "🧠", title: "AI/ML Expertise", desc: "Deep experience with RAG pipelines, LLMs, and production ML systems" },
+    { emoji: "🚀", title: "End-to-End Delivery", desc: "From ideation to deployment - Docker, Kubernetes, CI/CD" },
+    { emoji: "💡", title: "Problem Solver", desc: "Architected solutions that reduced operational effort by 70%" },
+    { emoji: "🤝", title: "Team Player", desc: "Collaborative approach with cross-functional teams" }
+  ];
+
+  return (
+    <div className="space-y-6 w-full animate-slideUp">
+      {/* Hero Section */}
+      <div className="relative bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-3xl p-8 text-white overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
+
+        <div className="relative z-10 text-center">
+          <h2 className="text-3xl md:text-4xl font-black mb-4">Why I'm Your Next Great Hire</h2>
+          <p className="text-lg text-white/90 max-w-2xl mx-auto">
+            I don't just write code — I <span className="font-bold text-yellow-300">build intelligent systems</span> that solve real business problems and deliver measurable impact.
+          </p>
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-3 gap-4">
+        {highlights.map((item, idx) => (
+          <div key={idx} className="bg-white rounded-2xl p-6 text-center shadow-lg border border-slate-100 hover:shadow-xl transition-shadow">
+            <div className="text-4xl font-black text-indigo-600 mb-2">{item.stat}</div>
+            <div className="font-bold text-slate-800 text-sm">{item.label}</div>
+            <div className="text-xs text-slate-500 mt-1">{item.desc}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Strengths */}
+      <div className="grid md:grid-cols-2 gap-4">
+        {strengths.map((item, idx) => (
+          <div key={idx} className="group bg-white rounded-2xl p-6 shadow-lg border border-slate-100 hover:border-indigo-200 hover:shadow-xl transition-all duration-300">
+            <div className="flex items-start gap-4">
+              <span className="text-3xl group-hover:scale-110 transition-transform">{item.emoji}</span>
+              <div>
+                <h4 className="font-bold text-slate-900 mb-1">{item.title}</h4>
+                <p className="text-slate-600 text-sm">{item.desc}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA */}
+      <div className="bg-slate-900 rounded-3xl p-8 text-center">
+        <h3 className="text-2xl font-bold text-white mb-4">Ready to Build Something Great?</h3>
+        <p className="text-slate-400 mb-6 max-w-xl mx-auto">
+          Let's discuss how my expertise in AI/ML and full-stack development can contribute to your team's success.
+        </p>
+        <div className="flex flex-wrap justify-center gap-4">
+          <a
+            href={`mailto:${data.email}`}
+            className="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-xl font-medium hover:from-indigo-600 hover:to-purple-600 transition-all shadow-lg hover:shadow-purple-500/30"
+          >
+            📧 Let's Talk
+          </a>
+          <a
+            href={resumePDF}
+            download="Sathvik_Modhi_Resume.pdf"
+            className="px-8 py-3 bg-white text-slate-900 rounded-xl font-medium hover:bg-slate-100 transition-all shadow-lg"
+          >
+            📄 Download Resume
           </a>
         </div>
       </div>
