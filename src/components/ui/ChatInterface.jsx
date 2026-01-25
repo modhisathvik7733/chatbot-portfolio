@@ -223,20 +223,20 @@ function ChatInterface() {
 
               <div className="w-full max-w-xl relative group z-20">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
-                <div className="relative bg-white rounded-2xl shadow-xl shadow-indigo-500/10 flex items-center p-2 border border-slate-100 transition-transform group-hover:-translate-y-1 duration-300">
+                <div className="relative bg-white rounded-2xl shadow-xl shadow-indigo-500/10 flex items-center gap-2 p-2 border border-slate-200 focus-within:border-indigo-400 focus-within:shadow-lg focus-within:shadow-indigo-500/20 transition-all duration-300 group-hover:-translate-y-1">
                   <input
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                     placeholder="Ask about my projects, skills, or experience..."
-                    className="flex-1 bg-transparent border-none focus:ring-0 text-slate-800 placeholder:text-slate-400 px-4 py-3 text-lg"
+                    className="flex-1 bg-transparent border-none focus:outline-none focus:ring-0 text-slate-800 placeholder:text-slate-400 px-4 py-3 text-lg"
                     autoFocus
                   />
                   <button
                     onClick={() => handleSend()}
                     disabled={!input.trim()}
-                    className="p-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-shrink-0 p-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-900"
                   >
                     <ChevronRight className="w-6 h-6" />
                   </button>
@@ -640,7 +640,6 @@ function WhyHireMeCard({ data }) {
           </div>
         ))}
       </div>
-
 
       {/* CTA */}
       <div className="bg-slate-900 rounded-3xl p-8 text-center">
